@@ -11,10 +11,10 @@ const filterDead = (posts) =>
 const filterDeleted = (posts) =>
   posts.filter(Boolean).filter(({ deleted }) => deleted !== true)
 
-const onlyPosts = (posts) =>
+const _onlyPosts = (posts) =>
   posts.filter(Boolean).filter(({ type }) => type === 'story')
 
-const onlyComments = (posts) =>
+const _onlyComments = (posts) =>
   posts.filter(Boolean).filter(({ type }) => type === 'comment')
 
 export const fetchItem = async (id) => {

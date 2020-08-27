@@ -16,7 +16,7 @@ import {
 } from '@material-ui/icons'
 import { ThemeContext } from './ThemeProvider'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
   },
