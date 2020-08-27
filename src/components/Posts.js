@@ -35,16 +35,11 @@ const postsReducer = (state, action) => {
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  card: {
     marginBottom: theme.spacing(1),
-
-    Card: {
-      marginBottom: theme.spacing(1),
-    },
-
-    Alert: {
-      marginTop: theme.spacing(3),
-    },
+  },
+  alert: {
+    marginTop: theme.spacing(3),
   },
 }))
 
@@ -68,7 +63,7 @@ const Posts = ({ postType = 'top' }) => {
 
   if (state.error) {
     return (
-      <Alert severity="error" variant="filled" classes={classes}>
+      <Alert severity="error" variant="filled" className={classes.alert}>
         {state.error}
       </Alert>
     )
@@ -76,7 +71,7 @@ const Posts = ({ postType = 'top' }) => {
 
   return state.posts.map((post) => {
     return (
-      <Card key={post.id} variant="outlined" classes={classes}>
+      <Card key={post.id} variant="outlined" className={classes.card}>
         <CardContent>
           <Typography gutterBottom variant="h6" component="h2">
             {post.title}
