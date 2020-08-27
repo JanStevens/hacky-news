@@ -28,6 +28,7 @@ module.exports = {
         },
         'lab',
       ],
+      ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
     ],
   },
 }
