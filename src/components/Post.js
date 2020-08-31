@@ -94,7 +94,7 @@ const Post = ({ id, rank }) => {
                 <Tooltip title="Comments">
                   <IconButton>
                     <Badge
-                      badgeContent={post.kids?.length}
+                      badgeContent={post.descendants}
                       max={9999}
                       color="primary"
                       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
