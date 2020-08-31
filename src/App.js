@@ -8,10 +8,11 @@ import {
   StylesProvider,
   createGenerateClassName,
 } from '@material-ui/core/styles'
+
 import { ThemeProvider } from './components/ThemeProvider'
 
 const generateClassName = createGenerateClassName({
-  productionPrefix: 'hn',
+  seed: 'hn',
 })
 
 const App = () => {
