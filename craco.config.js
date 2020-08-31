@@ -14,36 +14,33 @@ module.exports = {
       },
     },
   },
+  webpack: {
+    configure: {
+      optimization: {
+        runtimeChunk: true,
+      },
+    },
+  },
   babel: {
     plugins: [
       [
-        'babel-plugin-import',
+        'babel-plugin-transform-imports',
         {
-          libraryName: '@material-ui/core',
-          libraryDirectory: 'esm',
-          camel2DashComponentName: false,
+          '@material-ui/core': {
+            transform: '@material-ui/core/esm/${member}',
+            preventFullImport: true,
+          },
+
+          '@material-ui/icons': {
+            transform: '@material-ui/icons/esm/${member}',
+            preventFullImport: true,
+          },
+          '@material-ui/lab': {
+            transform: '@material-ui/lab/esm/${member}',
+            preventFullImport: true,
+          },
         },
-        'core',
       ],
-      [
-        'babel-plugin-import',
-        {
-          libraryName: '@material-ui/icons',
-          libraryDirectory: 'esm',
-          camel2DashComponentName: false,
-        },
-        'icons',
-      ],
-      [
-        'babel-plugin-import',
-        {
-          libraryName: '@material-ui/lab',
-          libraryDirectory: 'esm',
-          camel2DashComponentName: false,
-        },
-        'lab',
-      ],
-      ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
     ],
   },
 }
