@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useLayoutEffect,
 } from 'react'
-import { lightBlue, blueGrey } from '@material-ui/core/colors'
+import { lightBlue, blueGrey, red } from '@material-ui/core/colors'
 import {
   unstable_createMuiStrictModeTheme as createMuiTheme,
   ThemeProvider as MuiThemeProvider,
@@ -20,6 +20,9 @@ const lightTheme = {
     secondary: {
       main: lightBlue[500],
     },
+    error: {
+      main: red[900],
+    },
     type: 'light',
   },
 }
@@ -31,6 +34,9 @@ const darkTheme = {
     },
     secondary: {
       main: blueGrey[600],
+    },
+    error: {
+      main: red[900],
     },
     type: 'dark',
   },

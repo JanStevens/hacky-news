@@ -7,9 +7,11 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "axios": "^0.20.0",
+    "firebase": "^7.19.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "timeago-react": "^3.0.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-pipeline-operator": "^7.10.5",
