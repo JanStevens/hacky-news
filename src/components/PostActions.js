@@ -18,14 +18,11 @@ import {
 } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(
-  (_theme) => ({
-    root: {
-      paddingTop: 0,
-    },
-  }),
-  { index: 1 }
-)
+const useStyles = makeStyles((_theme) => ({
+  root: {
+    paddingTop: 0,
+  },
+}))
 
 const PostActions = ({ score, descendants, by, time }) => {
   const classes = useStyles()

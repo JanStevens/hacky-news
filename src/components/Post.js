@@ -3,11 +3,9 @@ import {
   Card,
   CardContent,
   Typography,
-  
   Avatar,
   CardHeader,
   CardActionArea,
-
   Link,
 } from '@material-ui/core'
 
@@ -32,8 +30,10 @@ const useStyles = makeStyles(
     actions: {
       paddingTop: 0,
     },
-  }),
-  { index: 1 }
+    loading: {
+      marginBottom: theme.spacing(1),
+    },
+  })
 )
 
 const Post = ({ id, rank }) => {
@@ -67,7 +67,11 @@ const Post = ({ id, rank }) => {
         {post ? (
           <PostActions {...post} />
         ) : (
-          <Skeleton animation="wave" height="40px" />
+          <Skeleton
+            className={classes.loading}
+            animation="wave"
+            height="40px"
+          />
         )}
       </CardContent>
     </Card>
