@@ -14,27 +14,25 @@ import { Skeleton } from '@material-ui/lab'
 import useFireItem from '../hooks/useFireItem'
 import PostActions from './PostActions'
 
-const useStyles = makeStyles(
-  (theme) => ({
-    root: {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    paddingBottom: 0,
+    marginBottom: theme.spacing(1),
+  },
+  header: {},
+  content: {
+    paddingTop: 0,
+    '&:last-child': {
       paddingBottom: 0,
-      marginBottom: theme.spacing(1),
     },
-    header: {},
-    content: {
-      paddingTop: 0,
-      '&:last-child': {
-        paddingBottom: 0,
-      },
-    },
-    actions: {
-      paddingTop: 0,
-    },
-    loading: {
-      marginBottom: theme.spacing(1),
-    },
-  })
-)
+  },
+  actions: {
+    paddingTop: 0,
+  },
+  loading: {
+    marginBottom: theme.spacing(1),
+  },
+}))
 
 const Post = ({ id, rank }) => {
   const classes = useStyles()
@@ -78,4 +76,4 @@ const Post = ({ id, rank }) => {
   )
 }
 
-export default Post
+export default React.memo(Post)

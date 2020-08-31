@@ -7,6 +7,7 @@ import {
   Box,
   Tooltip,
   IconButton,
+  Link,
 } from '@material-ui/core'
 import {
   Whatshot as WhatshotIcon,
@@ -15,15 +16,24 @@ import {
   Brightness3,
   Brightness7,
 } from '@material-ui/icons'
+import { Link as RouterLink } from 'react-router-dom'
 import { ThemeContext } from './ThemeProvider'
 import useOnlineIndicator from '../hooks/useOnlineIndicator'
+import SearchForm from './SearchForm'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
+    flexGrow: 1,
+    marginBottom: theme.spacing(2),
+  },
+  grow: {
     flexGrow: 1,
   },
   title: {
-    flexGrow: 1,
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block',
+    },
   },
 }))
 
@@ -33,23 +43,28 @@ const NavBar = () => {
   const classes = useStyles()
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" className={classes.root}>
       <Toolbar>
-        <Typography variant="h6" className={classes.title}>
-          Hacky News
+        <Typography variant="h6" className={classes.title} noWrap>
+          <Link component={RouterLink} to="/" underline="none" color="inherit">
+            Hacky News
+          </Link>
         </Typography>
+        <SearchForm />
+        <div className={classes.grow} />
+
         {!online && (
           <Tooltip title="Offline">
             <CloudOffIcon color="error" />
           </Tooltip>
         )}
         <Box ml={2}>
-          <IconButton color="inherit">
-            <Tooltip title="Top Stories">
+          <IconButton color="inherit" component={RouterLink} to="/news">
+            <Tooltip title="Top Stories" selected={true}>
               <WhatshotIcon />
             </Tooltip>
           </IconButton>
-          <IconButton color="inherit">
+          <IconButton color="inherit" component={RouterLink} to="/newest">
             <Tooltip title="New Stories">
               <FiberNewIcon />
             </Tooltip>
@@ -64,4 +79,4 @@ const NavBar = () => {
   )
 }
 
-export default NavBar
+export default React.memo(NavBar)

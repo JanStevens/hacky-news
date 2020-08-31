@@ -9,7 +9,7 @@ import {
   Hidden,
 } from '@material-ui/core'
 import TimeAgo from 'timeago-react'
-
+import { Link as RouterLink } from 'react-router-dom'
 import {
   TrendingUp as TrendingUpIcon,
   Message as MessageIcon,
@@ -24,7 +24,7 @@ const useStyles = makeStyles((_theme) => ({
   },
 }))
 
-const PostActions = ({ score, descendants, by, time }) => {
+const PostActions = ({ id, score, descendants, by, time }) => {
   const classes = useStyles()
 
   return (
@@ -50,7 +50,7 @@ const PostActions = ({ score, descendants, by, time }) => {
         </Grid>
         <Grid item xs>
           <Tooltip title="Comments">
-            <IconButton>
+            <IconButton component={RouterLink} to={`/item/${id}`}>
               <Badge
                 badgeContent={descendants}
                 max={9999}
@@ -101,4 +101,4 @@ const PostActions = ({ score, descendants, by, time }) => {
   )
 }
 
-export default PostActions
+export default React.memo(PostActions)

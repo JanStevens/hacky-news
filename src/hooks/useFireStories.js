@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import { database } from '../utils/api'
 
 const useFireStories = ({ type = 'new' }) => {
   const [itemIds, setItemIds] = useState([])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ref = database.ref(`/v0/${type}stories`).limitToFirst(25)
     const onValueChange = ref.on(
       'value',
