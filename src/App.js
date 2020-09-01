@@ -6,7 +6,7 @@ import {
   createGenerateClassName,
 } from '@material-ui/core/styles'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { ThemeProvider } from './components/ThemeProvider'
+import { ThemeProvider } from './contexts/ThemeProvider'
 import loadable from '@loadable/component'
 
 import NavBar from './components/NavBar'

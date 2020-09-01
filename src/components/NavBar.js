@@ -17,7 +17,7 @@ import {
   Brightness7,
 } from '@material-ui/icons'
 import { Link as RouterLink } from 'react-router-dom'
-import { ThemeContext } from './ThemeProvider'
+import { ThemeContext } from '../contexts/ThemeProvider'
 import useOnlineIndicator from '../hooks/useOnlineIndicator'
 import SearchForm from './SearchForm'
 

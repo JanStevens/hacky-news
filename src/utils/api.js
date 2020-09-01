@@ -16,27 +16,9 @@ const filterDeleted = (posts) =>
 const onlyPosts = (posts) =>
   posts.filter(Boolean).filter(({ type }) => type === 'story')
 
-const _onlyComments = (posts) =>
-  posts.filter(Boolean).filter(({ type }) => type === 'comment')
-
 export const fetchItem = async (id) => {
   const { data } = await client.get(`/item/${id}.json`)
   return data
-}
-
-export const fetchMainPosts = async (type = 'top') => {
-  try {
-    const { data } = await client.get(`/${type}stories.json`)
-    // TODO this calls for some interesting pagination possibilities
-    const postIds = data.slice(0, 30)
-    return postIds
-
-    // const posts = await Promise.all(postIds.map(fetchItem))
-    // return posts |> filterDead |> filterDeleted
-  } catch (error) {
-    console.warn(error)
-    throw new Error(`There was an error fetching the ${type} posts.`)
-  }
 }
 
 export const fetchUser = async (userName) => {
