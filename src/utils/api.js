@@ -7,13 +7,13 @@ const client = axios.create({
   timeout: 2000,
 })
 
-const _filterDead = (posts) =>
+const filterDead = (posts) =>
   posts.filter(Boolean).filter(({ dead }) => dead !== true)
 
-const _filterDeleted = (posts) =>
+const filterDeleted = (posts) =>
   posts.filter(Boolean).filter(({ deleted }) => deleted !== true)
 
-const _onlyPosts = (posts) =>
+const onlyPosts = (posts) =>
   posts.filter(Boolean).filter(({ type }) => type === 'story')
 
 const _onlyComments = (posts) =>
@@ -28,7 +28,7 @@ export const fetchMainPosts = async (type = 'top') => {
   try {
     const { data } = await client.get(`/${type}stories.json`)
     // TODO this calls for some interesting pagination possibilities
-    const postIds = data.slice(0, 25)
+    const postIds = data.slice(0, 30)
     return postIds
 
     // const posts = await Promise.all(postIds.map(fetchItem))
@@ -39,6 +39,19 @@ export const fetchMainPosts = async (type = 'top') => {
   }
 }
 
+export const fetchUser = async (userName) => {
+  try {
+    const { data } = await client.get(`/user/${userName}.json`)
+    const postIds = data.submitted.slice(0, 30)
+    const posts = await Promise.all(postIds.map(fetchItem))
+    const fitleredPosts = filterDeleted(filterDead(onlyPosts(posts)))
+    return { ...data, posts: fitleredPosts }
+  } catch (error) {
+    console.warn(error)
+    throw new Error(`There was an error fetching the user ${userName}`)
+  }
+}
+
 // Firebase API
 var config = {
   authDomain: 'hacker-news.firebaseio.com',
@@ -46,4 +59,5 @@ var config = {
 }
 
 firebase.initializeApp(config)
+
 export const database = firebase.database()

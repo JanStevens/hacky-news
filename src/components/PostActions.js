@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  CardActions,
   Badge,
   Tooltip,
   IconButton,
@@ -16,88 +15,83 @@ import {
   AccountCircle as AccountIcon,
   Schedule as ScheduleIcon,
 } from '@material-ui/icons'
-import { makeStyles } from '@material-ui/core/styles'
-
-const useStyles = makeStyles((_theme) => ({
-  root: {
-    paddingTop: 0,
-  },
-}))
+import { useHistory } from 'react-router-dom'
 
 const PostActions = ({ id, score, descendants, by, time }) => {
-  const classes = useStyles()
+  const history = useHistory()
+
+  const handleClick = () => history.push(`/users/${by}`)
 
   return (
-    <CardActions disableSpacing className={classes.root}>
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        spacing={3}
-      >
-        <Grid item xs>
-          <Tooltip title="Score">
+    <Grid
+      container
+      direction="row"
+      justify="space-between"
+      alignItems="center"
+      spacing={3}
+    >
+      <Grid item>
+        <Tooltip title="Score">
+          <Badge
+            badgeContent={score}
+            max={9999}
+            color="primary"
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          >
+            <TrendingUpIcon />
+          </Badge>
+        </Tooltip>
+      </Grid>
+      <Grid item>
+        <Tooltip title="Comments">
+          <IconButton component={RouterLink} to={`/items/${id}`}>
             <Badge
-              badgeContent={score}
+              badgeContent={descendants}
               max={9999}
               color="primary"
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             >
-              <TrendingUpIcon />
+              <MessageIcon />
             </Badge>
-          </Tooltip>
-        </Grid>
-        <Grid item xs>
-          <Tooltip title="Comments">
-            <IconButton component={RouterLink} to={`/item/${id}`}>
-              <Badge
-                badgeContent={descendants}
-                max={9999}
-                color="primary"
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              >
-                <MessageIcon />
-              </Badge>
+          </IconButton>
+        </Tooltip>
+      </Grid>
+      <Grid item>
+        <Hidden smUp>
+          <Tooltip title={by}>
+            <IconButton component={RouterLink} to={`/users/${by}`}>
+              <AccountIcon />
             </IconButton>
           </Tooltip>
-        </Grid>
-        <Grid item xs>
-          <Hidden smUp>
-            <Tooltip title={by}>
-              <IconButton>
-                <AccountIcon />
-              </IconButton>
-            </Tooltip>
-          </Hidden>
-          <Hidden xsDown>
-            <Chip
-              variant="outlined"
-              color="default"
-              label={by}
-              icon={<AccountIcon />}
-            />
-          </Hidden>
-        </Grid>
-        <Grid item xs>
-          <Hidden smUp>
-            <Tooltip title={<TimeAgo datetime={time * 1000} />}>
-              <IconButton>
-                <ScheduleIcon />
-              </IconButton>
-            </Tooltip>
-          </Hidden>
-          <Hidden xsDown>
-            <Chip
-              variant="outlined"
-              color="default"
-              label={<TimeAgo datetime={time * 1000} />}
-              icon={<ScheduleIcon />}
-            />
-          </Hidden>
-        </Grid>
+        </Hidden>
+        <Hidden xsDown>
+          <Chip
+            variant="outlined"
+            color="default"
+            label={by}
+            onClick={handleClick}
+            icon={<AccountIcon />}
+          />
+        </Hidden>
       </Grid>
-    </CardActions>
+      <Grid item>
+        <Hidden smUp>
+          <Tooltip title={<TimeAgo datetime={time * 1000} />}>
+            <IconButton>
+              <ScheduleIcon />
+            </IconButton>
+          </Tooltip>
+        </Hidden>
+        <Hidden xsDown>
+          <Chip
+            variant="outlined"
+            color="default"
+            label={<TimeAgo datetime={time * 1000} />}
+            icon={<ScheduleIcon />}
+          />
+        </Hidden>
+      </Grid>
+    </Grid>
   )
 }
 

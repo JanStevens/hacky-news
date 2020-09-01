@@ -1,11 +1,11 @@
-import { useState, useLayoutEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { database } from '../utils/api'
 
 const useFireStories = ({ type = 'new' }) => {
   const [itemIds, setItemIds] = useState([])
 
-  useLayoutEffect(() => {
-    const ref = database.ref(`/v0/${type}stories`).limitToFirst(25)
+  useEffect(() => {
+    const ref = database.ref(`/v0/${type}stories`).limitToFirst(30)
     const onValueChange = ref.on(
       'value',
       (snapshot) => setItemIds(snapshot.val()),

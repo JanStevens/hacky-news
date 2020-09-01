@@ -7,19 +7,15 @@ import {
   CardHeader,
   CardActionArea,
   Link,
+  Box,
+  CardActions,
 } from '@material-ui/core'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { Skeleton } from '@material-ui/lab'
-import useFireItem from '../hooks/useFireItem'
 import PostActions from './PostActions'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    paddingBottom: 0,
-    marginBottom: theme.spacing(1),
-  },
-  header: {},
+const useStyles = makeStyles((_theme) => ({
   content: {
     paddingTop: 0,
     '&:last-child': {
@@ -29,50 +25,50 @@ const useStyles = makeStyles((theme) => ({
   actions: {
     paddingTop: 0,
   },
-  loading: {
-    marginBottom: theme.spacing(1),
-  },
 }))
 
-const Post = ({ id, rank }) => {
+const Post = ({ rank, post }) => {
   const classes = useStyles()
-  const post = useFireItem(id)
+
+  // Don't attempt to render non stories they need different UI
+  if (post && post.type && post.type !== 'story') {
+    return null
+  }
 
   return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <Link
-          href={post?.url}
-          color="inherit"
-          rel="noopener noreferrer"
-          target="_blank"
-          style={{ textDecoration: 'none' }}
-        >
-          <CardHeader
-            className={classes.header}
-            avatar={<Avatar>{rank}</Avatar>}
-            disableTypography
-            title={
-              <Typography variant="h6" component="h2">
-                {post ? post.title : <Skeleton />}
-              </Typography>
-            }
-          />
-        </Link>
-      </CardActionArea>
+    <Box mb={1}>
+      <Card>
+        <CardActionArea>
+          <Link
+            href={post?.url}
+            color="inherit"
+            rel="noopener noreferrer"
+            target="_blank"
+            style={{ textDecoration: 'none' }}
+          >
+            <CardHeader
+              avatar={rank && <Avatar>{rank}</Avatar>}
+              disableTypography
+              title={
+                <Typography variant="h6" component="h2">
+                  {post ? post.title : <Skeleton />}
+                </Typography>
+              }
+            />
+          </Link>
+        </CardActionArea>
 
-      <CardContent className={classes.content}>
-        {post ? (
-          <PostActions {...post} />
-        ) : (
-          <Skeleton
-            className={classes.loading}
-            animation="wave"
-            height="40px"
-          />
-        )}
-      </CardContent>
-    </Card>
+        <CardContent className={classes.content}>
+          <CardActions disableSpacing className={classes.actions}>
+            {post ? (
+              <PostActions {...post} />
+            ) : (
+              <Skeleton animation="wave" height="40px" width="100%" />
+            )}
+          </CardActions>
+        </CardContent>
+      </Card>
+    </Box>
   )
 }
 

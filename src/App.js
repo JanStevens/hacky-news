@@ -1,20 +1,18 @@
 import React from 'react'
-import { Container } from '@material-ui/core'
-import NavBar from './components/NavBar'
-import Posts from './components/Posts'
-import Item from './components/Item'
-
 import { Alert } from '@material-ui/lab'
-
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-
-import { CssBaseline } from '@material-ui/core'
+import { CssBaseline, Container } from '@material-ui/core'
 import {
   StylesProvider,
   createGenerateClassName,
 } from '@material-ui/core/styles'
-
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { ThemeProvider } from './components/ThemeProvider'
+import loadable from '@loadable/component'
+
+import NavBar from './components/NavBar'
+const Posts = loadable(() => import('./components/Posts'))
+const Item = loadable(() => import('./components/Item'))
+const User = loadable(() => import('./components/User'))
 
 const generateClassName = createGenerateClassName({
   seed: 'hn',
@@ -35,7 +33,8 @@ const App = () => {
               <Route exact path={'/newest'}>
                 <Posts postType={'new'} />
               </Route>
-              <Route path={'/item/:id'} component={Item} />
+              <Route path={'/items/:id'} component={Item} />
+              <Route path={'/users/:id'} component={User} />
               <Route
                 render={() => (
                   <Alert severity="error" variant="filled">

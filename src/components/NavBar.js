@@ -29,12 +29,6 @@ const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
-  title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
-  },
 }))
 
 const NavBar = () => {
@@ -45,7 +39,7 @@ const NavBar = () => {
   return (
     <AppBar position="sticky" className={classes.root}>
       <Toolbar>
-        <Typography variant="h6" className={classes.title} noWrap>
+        <Typography variant="h6" noWrap>
           <Link component={RouterLink} to="/" underline="none" color="inherit">
             Hacky News
           </Link>

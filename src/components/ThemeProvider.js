@@ -57,12 +57,11 @@ export const ThemeProvider = ({ children }) => {
   }, [])
 
   useLayoutEffect(() => {
-    const id = window
-      .matchMedia('(prefers-color-scheme: dark)')
-      .addEventListener('change', (e) => setDark(e.matches))
+    const handleEvent = (e) => setDark(e.matches)
+    const mql = window.matchMedia('(prefers-color-scheme: dark)')
+    mql.addEventListener('change', handleEvent)
 
-    return () =>
-      window.matchMedia('(prefers-color-scheme: dark)').removeEventListener(id)
+    return () => mql.removeListener(handleEvent)
   }, [])
 
   // We only want to create the theme as little as possible so memoize the result of createMuiTheme
