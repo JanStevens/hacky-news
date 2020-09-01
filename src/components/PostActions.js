@@ -8,29 +8,29 @@ import {
   Hidden,
 } from '@material-ui/core'
 import TimeAgo from 'timeago-react'
-import { Link as RouterLink } from 'react-router-dom'
 import {
   TrendingUp as TrendingUpIcon,
   Message as MessageIcon,
   AccountCircle as AccountIcon,
   Schedule as ScheduleIcon,
 } from '@material-ui/icons'
-import { useHistory } from 'react-router-dom'
+import { Link as RouterLink, useHistory } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
+  right: {
+    textAlign: 'right',
+  },
+}))
 
 const PostActions = ({ id, score, descendants, by, time }) => {
   const history = useHistory()
-
+  const classes = useStyles()
   const handleClick = () => history.push(`/users/${by}`)
 
   return (
-    <Grid
-      container
-      direction="row"
-      justify="space-between"
-      alignItems="center"
-      spacing={3}
-    >
-      <Grid item>
+    <Grid container direction="row" alignItems="center" spacing={3}>
+      <Grid item xs>
         <Tooltip title="Score">
           <Badge
             badgeContent={score}
@@ -42,7 +42,7 @@ const PostActions = ({ id, score, descendants, by, time }) => {
           </Badge>
         </Tooltip>
       </Grid>
-      <Grid item>
+      <Grid item xs>
         <Tooltip title="Comments">
           <IconButton component={RouterLink} to={`/items/${id}`}>
             <Badge
@@ -56,7 +56,7 @@ const PostActions = ({ id, score, descendants, by, time }) => {
           </IconButton>
         </Tooltip>
       </Grid>
-      <Grid item>
+      <Grid item xs>
         <Hidden smUp>
           <Tooltip title={by}>
             <IconButton component={RouterLink} to={`/users/${by}`}>
@@ -74,7 +74,7 @@ const PostActions = ({ id, score, descendants, by, time }) => {
           />
         </Hidden>
       </Grid>
-      <Grid item>
+      <Grid item xs className={classes.right}>
         <Hidden smUp>
           <Tooltip title={<TimeAgo datetime={time * 1000} />}>
             <IconButton>
