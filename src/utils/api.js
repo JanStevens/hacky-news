@@ -26,8 +26,8 @@ export const fetchUser = async (userName) => {
     const { data } = await client.get(`/user/${userName}.json`)
     const postIds = data.submitted.slice(0, 30)
     const posts = await Promise.all(postIds.map(fetchItem))
-    const fitleredPosts = filterDeleted(filterDead(onlyPosts(posts)))
-    return { ...data, posts: fitleredPosts }
+    const filteredPosts = filterDeleted(filterDead(onlyPosts(posts)))
+    return { ...data, posts: filteredPosts }
   } catch (error) {
     console.warn(error)
     throw new Error(`There was an error fetching the user ${userName}`)
