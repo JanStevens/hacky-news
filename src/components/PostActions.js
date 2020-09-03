@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   Badge,
   Tooltip,
@@ -13,9 +13,11 @@ import {
   Message as MessageIcon,
   AccountCircle as AccountIcon,
   Schedule as ScheduleIcon,
+  Dns as DnsIcon,
 } from '@material-ui/icons'
 import { Link as RouterLink, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
+import extractDomain from '../utils/extractDomain'
 
 const useStyles = makeStyles(() => ({
   right: {
@@ -23,15 +25,23 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const PostActions = ({ id, score, descendants, by, time }) => {
+const PostActions = ({ id, url, score, descendants, by, time }) => {
   const history = useHistory()
   const classes = useStyles()
   const handleClick = () => history.push(`/users/${by}`)
 
+  const domain = useMemo(() => extractDomain(url), [url])
+
   return (
-    <Grid container direction="row" alignItems="center" spacing={3}>
+    <Grid
+      container
+      direction="row"
+      alignItems="center"
+      wrap="nowrap"
+      spacing={0}
+    >
       <Grid item xs>
-        <Tooltip title="Score">
+        <Tooltip title="Score" placement="top">
           <Badge
             badgeContent={score}
             max={9999}
@@ -43,7 +53,7 @@ const PostActions = ({ id, score, descendants, by, time }) => {
         </Tooltip>
       </Grid>
       <Grid item xs>
-        <Tooltip title="Comments">
+        <Tooltip title="Comments" placement="top">
           <IconButton component={RouterLink} to={`/items/${id}`}>
             <Badge
               badgeContent={descendants}
@@ -58,7 +68,7 @@ const PostActions = ({ id, score, descendants, by, time }) => {
       </Grid>
       <Grid item xs>
         <Hidden smUp>
-          <Tooltip title={by}>
+          <Tooltip title={by} placement="top">
             <IconButton component={RouterLink} to={`/users/${by}`}>
               <AccountIcon />
             </IconButton>
@@ -74,9 +84,28 @@ const PostActions = ({ id, score, descendants, by, time }) => {
           />
         </Hidden>
       </Grid>
+      {domain && (
+        <Grid item xs>
+          <Hidden smUp>
+            <Tooltip title={domain} placement="top">
+              <IconButton>
+                <DnsIcon />
+              </IconButton>
+            </Tooltip>
+          </Hidden>
+          <Hidden xsDown>
+            <Chip
+              variant="outlined"
+              color="default"
+              label={domain}
+              icon={<DnsIcon />}
+            />
+          </Hidden>
+        </Grid>
+      )}
       <Grid item xs className={classes.right}>
         <Hidden smUp>
-          <Tooltip title={<TimeAgo datetime={time * 1000} />}>
+          <Tooltip title={<TimeAgo datetime={time * 1000} />} placement="top">
             <IconButton>
               <ScheduleIcon />
             </IconButton>

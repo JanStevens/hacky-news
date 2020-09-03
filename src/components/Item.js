@@ -12,7 +12,7 @@ const Item = () => {
 
   return (
     <>
-      <Post post={post} />
+      <Post post={post} expanded />
 
       <Box my={2}>
         <Typography component="h2" variant="h5">

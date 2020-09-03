@@ -57,7 +57,7 @@ const Comment = ({ id }) => {
               </Box>
 
               <Typography
-                variant="body2"
+                variant="body1"
                 color="textSecondary"
                 component="p"
                 dangerouslySetInnerHTML={{ __html: comment.text }}

@@ -13,6 +13,7 @@ import {
 
 import { makeStyles } from '@material-ui/core/styles'
 import { Skeleton } from '@material-ui/lab'
+import { Link as RouterLink } from 'react-router-dom'
 import PostActions from './PostActions'
 
 const useStyles = makeStyles((_theme) => ({
@@ -27,7 +28,25 @@ const useStyles = makeStyles((_theme) => ({
   },
 }))
 
-const Post = ({ rank, post }) => {
+const PostLink = ({ id, url, children }) => {
+  const defaultProps = { color: 'inherit', style: { textDecoration: 'none' } }
+  const props = url
+    ? {
+        ...defaultProps,
+        href: url,
+        rel: 'noopener noreferrer',
+        target: '_blank',
+      }
+    : {
+        ...defaultProps,
+        component: RouterLink,
+        to: `/items/${id}`,
+      }
+
+  return <Link {...props}>{children}</Link>
+}
+
+const Post = ({ rank, post, expanded }) => {
   const classes = useStyles()
 
   // Don't attempt to render non stories they need different UI
@@ -39,26 +58,29 @@ const Post = ({ rank, post }) => {
     <Box mb={1}>
       <Card>
         <CardActionArea>
-          <Link
-            href={post?.url}
-            color="inherit"
-            rel="noopener noreferrer"
-            target="_blank"
-            style={{ textDecoration: 'none' }}
-          >
+          <PostLink id={post?.id} url={post?.url}>
             <CardHeader
               avatar={rank && <Avatar>{rank}</Avatar>}
               disableTypography
               title={
                 <Typography variant="h6" component="h2">
-                  {post ? post.title : <Skeleton />}
+                  {post?.title ? post.title : <Skeleton />}
                 </Typography>
               }
             />
-          </Link>
+          </PostLink>
         </CardActionArea>
 
         <CardContent className={classes.content}>
+          {expanded && (
+            <Typography
+              variant="body1"
+              color="textSecondary"
+              component="p"
+              dangerouslySetInnerHTML={{ __html: post?.text }}
+            ></Typography>
+          )}
+
           <CardActions disableSpacing className={classes.actions}>
             {post ? (
               <PostActions {...post} />
