@@ -1,6 +1,6 @@
 export type StoryType = 'new' | 'top'
 
-export type Item = {
+type Item = {
   id: number
   deleted: boolean
   type: 'job' | 'story' | 'comment' | 'poll' | 'pollopt'
@@ -17,7 +17,9 @@ export type Item = {
   descendants: number
 }
 
-export type User = {
+export type Item = ReadOnly<Item>
+
+type User = {
   id: string
   delay: number
   created: number
@@ -25,6 +27,8 @@ export type User = {
   about: string
   submitted: Array<number>
 }
+
+export type User = ReadOnly<User>
 
 export interface UserAndPosts extends User {
   posts: Array<Item>
