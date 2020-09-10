@@ -8,7 +8,7 @@ import {
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { ThemeProvider } from './contexts/ThemeProvider'
 import loadable from '@loadable/component'
-import { StoryEnum } from './types/api'
+import { StoryEnum } from './types'
 
 import NavBar from './components/NavBar'
 const Posts = loadable(() => import('./components/Posts'))

@@ -21,7 +21,7 @@ import {
 import TimeAgo from 'timeago-react'
 import Post from './Post'
 
-import { UserAndPosts } from '../types/api'
+import { UserAndPosts } from '../types'
 
 const useStyles = makeStyles((theme) => ({
   root: {

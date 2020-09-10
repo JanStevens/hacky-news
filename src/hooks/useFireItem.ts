@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { database } from '../utils/api'
 
-import type { ItemType } from '../types/api'
+import type { ItemType } from '../types'
 
 const useFireItem = (id: number) => {
   const [item, setItem] = useState<ItemType | null>(null)

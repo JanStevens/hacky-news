@@ -2,7 +2,7 @@ import React from 'react'
 import PostContainer from './PostContainer'
 import useFireStories from '../hooks/useFireStories'
 import Loading from './Loading'
-import { StoryEnum } from '../types/api'
+import { StoryEnum } from '../types'
 
 interface IPosts {
   postType: StoryEnum

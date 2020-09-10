@@ -2,7 +2,7 @@ import axios from 'axios'
 import * as firebase from 'firebase/app'
 import 'firebase/database'
 
-import type { UserType, ItemType, UserAndPosts } from '../types/api'
+import type { UserType, ItemType, UserAndPosts } from '../types'
 
 const client = axios.create({
   baseURL: 'https://hacker-news.firebaseio.com/v0/',

@@ -19,7 +19,7 @@ import { Link as RouterLink, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import extractDomain from '../utils/extractDomain'
 
-import type { ItemType } from '../types/api'
+import type { ItemType } from '../types'
 
 const useStyles = makeStyles(() => ({
   right: {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { database } from '../utils/api'
-import { StoryEnum } from '../types/api'
+import { StoryEnum } from '../types'
 
 interface IFireStories {
   type: StoryEnum

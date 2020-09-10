@@ -16,7 +16,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Skeleton } from '@material-ui/lab'
 import { Link as RouterLink } from 'react-router-dom'
 import PostActions from './PostActions'
-import { ItemType, ItemTypeEnum } from '../types/api'
+import { ItemType, ItemTypeEnum } from '../types'
 
 const useStyles = makeStyles((_theme) => ({
   content: {
