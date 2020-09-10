@@ -46,7 +46,7 @@ const darkTheme: ThemeOptions = {
 const browserIsDarkMode = () =>
   window.matchMedia('(prefers-color-scheme: dark)').matches
 
-export type ThemeContextType = {
+interface ThemeContextType {
   isDarkMode: boolean
   toggleTheme: () => void
 }
@@ -55,13 +55,13 @@ export const ThemeContext = createContext<ThemeContextType | undefined>(
   undefined
 )
 
-interface ThemeProviderProps {
+interface IThemeProvider {
   children: React.ReactNode
 }
 
 // Responsible for watching the dark mode toggle of the browser / os
 // and setting up the corresponding theme
-export const ThemeProvider = ({ children }: ThemeProviderProps) => {
+export const ThemeProvider = ({ children }: IThemeProvider) => {
   const [dark, setDark] = useState<boolean>(browserIsDarkMode)
 
   const toggleTheme = useCallback(() => {
