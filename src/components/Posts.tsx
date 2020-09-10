@@ -2,13 +2,13 @@ import React from 'react'
 import PostContainer from './PostContainer'
 import useFireStories from '../hooks/useFireStories'
 import Loading from './Loading'
-import { StoryType } from '../types/api'
+import { StoryEnum } from '../types/api'
 
 interface IPosts {
-  postType: StoryType
+  postType: StoryEnum
 }
 
-const Posts = ({ postType = 'top' }: IPosts) => {
+const Posts = ({ postType = StoryEnum.Top }: IPosts) => {
   const postIds = useFireStories({ type: postType })
 
   if (postIds.length === 0) {

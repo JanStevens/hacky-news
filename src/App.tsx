@@ -8,6 +8,7 @@ import {
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { ThemeProvider } from './contexts/ThemeProvider'
 import loadable from '@loadable/component'
+import { StoryEnum } from './types/api'
 
 import NavBar from './components/NavBar'
 const Posts = loadable(() => import('./components/Posts'))
@@ -28,10 +29,10 @@ const App = () => {
             <NavBar />
             <Switch>
               <Route exact path={['/', '/news']}>
-                <Posts postType={'top'} />
+                <Posts postType={StoryEnum.Top} />
               </Route>
               <Route exact path={'/newest'}>
-                <Posts postType={'new'} />
+                <Posts postType={StoryEnum.New} />
               </Route>
               <Route path={'/items/:id'} component={Item} />
               <Route path={'/users/:id'} component={User} />

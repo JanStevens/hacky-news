@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
 import { database } from '../utils/api'
-import { StoryType } from '../types/api'
+import { StoryEnum } from '../types/api'
 
 interface IFireStories {
-  type: StoryType
+  type: StoryEnum
 }
 
-const useFireStories = ({ type = 'new' }: IFireStories): Array<number> => {
+const useFireStories = ({
+  type = StoryEnum.Top,
+}: IFireStories): Array<number> => {
   const [itemIds, setItemIds] = useState<Array<number>>([])
 
   useEffect(() => {

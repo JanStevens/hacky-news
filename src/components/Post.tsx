@@ -16,7 +16,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Skeleton } from '@material-ui/lab'
 import { Link as RouterLink } from 'react-router-dom'
 import PostActions from './PostActions'
-import { Item } from '../types/api'
+import { ItemType, ItemTypeEnum } from '../types/api'
 
 const useStyles = makeStyles((_theme) => ({
   content: {
@@ -57,7 +57,7 @@ const PostLink = ({ id, url, children }: IPostLink) => {
 }
 
 interface IPost {
-  post: Item | null
+  post: ItemType | null
   rank?: number
   expanded?: boolean
 }
@@ -66,7 +66,7 @@ const Post = ({ rank, post, expanded = false }: IPost) => {
   const classes = useStyles()
 
   // Don't attempt to render non stories they need different UI
-  if (post && post.type && post.type !== 'story') {
+  if (post && post.type && post.type !== ItemTypeEnum.Story) {
     return null
   }
 

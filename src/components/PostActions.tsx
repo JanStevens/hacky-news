@@ -19,7 +19,7 @@ import { Link as RouterLink, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import extractDomain from '../utils/extractDomain'
 
-import { Item } from '../types/api'
+import type { ItemType } from '../types/api'
 
 const useStyles = makeStyles(() => ({
   right: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const PostActions = ({ id, url, score, descendants, by, time }: Item) => {
+const PostActions = ({ id, url, score, descendants, by, time }: ItemType) => {
   const history = useHistory()
   const classes = useStyles()
   const handleClick = () => history.push(`/users/${by}`)

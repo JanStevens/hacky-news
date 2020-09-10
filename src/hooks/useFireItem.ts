@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react'
 import { database } from '../utils/api'
 
-import { Item } from '../types/api'
+import type { ItemType } from '../types/api'
 
 const useFireItem = (id: number) => {
-  const [item, setItem] = useState<Item | null>(null)
+  const [item, setItem] = useState<ItemType | null>(null)
 
   useEffect(() => {
     const ref = database.ref(`/v0/item/${id}`)
     const onValueChange = ref.on(
       'value',
-      (snapshot) => setItem(snapshot.val() as Item),
+      (snapshot) => setItem(snapshot.val() as ItemType),
       (error: string | null | undefined) => console.error(error)
     )
     return () => ref.off('value', onValueChange)
