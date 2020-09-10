@@ -30,6 +30,8 @@ type User = {
 
 export type User = ReadOnly<User>
 
-export interface UserAndPosts extends User {
+export interface Posts {
   posts: Array<Item>
 }
+
+export type UserAndPosts = User & Posts
