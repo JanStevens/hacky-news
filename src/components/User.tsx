@@ -21,6 +21,8 @@ import {
 import TimeAgo from 'timeago-react'
 import Post from './Post'
 
+import { UserAndPosts } from '../types/api'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: theme.spacing(3),
@@ -32,7 +34,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const userReducer = (state, action) => {
+interface StateType {
+  loading: boolean
+  error?: string | null
+  user?: UserAndPosts | null
+}
+
+type ActionType =
+  | { type: 'success'; user: UserAndPosts }
+  | { type: 'failure'; error: Error }
+
+interface RouterParams {
+  id: string
+}
+
+const userReducer = (state: StateType, action: ActionType): StateType => {
   switch (action.type) {
     case 'success':
       return {
@@ -51,7 +67,7 @@ const userReducer = (state, action) => {
       }
 
     default:
-      throw new Error(`Don't know how to handle ${action.type}`)
+      throw new Error(`Don't know how to handle ${action}`)
   }
 }
 
@@ -62,14 +78,14 @@ const initialState = {
 }
 
 const User = () => {
-  const { id } = useParams()
+  const { id } = useParams<RouterParams>()
   const classes = useStyles()
   const [state, dispatch] = useReducer(userReducer, initialState)
 
   useEffect(() => {
     fetchUser(id)
       .then((user) => dispatch({ type: 'success', user }))
-      .catch((error) => dispatch({ type: 'failure', error }))
+      .catch((error: Error) => dispatch({ type: 'failure', error }))
   }, [id])
 
   const { user, loading, error } = state
@@ -98,14 +114,14 @@ const User = () => {
           >
             <Grid item>
               <Typography component="h1" variant="h4">
-                {user.id}
+                {user!.id}
               </Typography>
             </Grid>
             <Grid item>
               <Chip
                 variant="outlined"
                 color="default"
-                label={`${user.karma} karma`}
+                label={`${user!.karma} karma`}
                 icon={<TrendingUpIcon />}
               />
             </Grid>
@@ -114,7 +130,7 @@ const User = () => {
               <Chip
                 variant="outlined"
                 color="default"
-                label={`${user.submitted.length} posts`}
+                label={`${user!.submitted.length} posts`}
                 icon={<PostAddIcon />}
               />
             </Grid>
@@ -123,7 +139,7 @@ const User = () => {
               <Chip
                 variant="outlined"
                 color="default"
-                label={<TimeAgo datetime={user.created * 1000} />}
+                label={<TimeAgo datetime={user!.created * 1000} />}
                 icon={<ScheduleIcon />}
               />
             </Grid>
@@ -136,7 +152,7 @@ const User = () => {
           Last 30 Posts
         </Typography>
       </Box>
-      {user.posts.map((post) => (
+      {user!.posts.map((post) => (
         <Post key={post.id} post={post} />
       ))}
     </>

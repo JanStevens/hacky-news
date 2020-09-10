@@ -1,6 +1,6 @@
-const extractDomain = (url) => {
+const extractDomain = (url: string): string | null => {
   if (!url) return null
-  var result
+  var result = null
   let match = url.match(
     /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:/\n?=]+)/im
   )

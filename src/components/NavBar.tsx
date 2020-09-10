@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const NavBar = () => {
-  const { isDarkMode, toggleTheme } = useContext(ThemeContext)
+  const { isDarkMode, toggleTheme } = useContext(ThemeContext)!
   const online = useOnlineIndicator()
   const classes = useStyles()
 
@@ -54,7 +54,7 @@ const NavBar = () => {
         )}
         <Box ml={2}>
           <IconButton color="inherit" component={RouterLink} to="/news">
-            <Tooltip title="Top Stories" selected={true}>
+            <Tooltip title="Top Stories">
               <WhatshotIcon />
             </Tooltip>
           </IconButton>

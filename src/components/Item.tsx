@@ -5,10 +5,14 @@ import Post from './Post'
 import Comment from './Comment'
 import { Box, Typography } from '@material-ui/core'
 
+interface RouterParams {
+  id?: string
+}
+
 // An item could be anything but we assume its a Post
 const Item = () => {
-  const { id } = useParams()
-  const post = useFireItem(id)
+  const { id } = useParams<RouterParams>()
+  const post = useFireItem(Number(id))
 
   return (
     <>

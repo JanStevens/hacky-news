@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FormEvent } from 'react'
 import { fade, makeStyles } from '@material-ui/core/styles'
 import { Search as SearchIcon } from '@material-ui/icons'
 import { InputBase } from '@material-ui/core'
@@ -46,12 +46,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SearchForm = () => {
-  const [search, setSearch] = React.useState('')
+  const [search, setSearch] = React.useState<string>('')
   const classes = useStyles()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    window.location = `https://hn.algolia.com/?q=${search}`
+    window.location.href = `https://hn.algolia.com/?q=${search}`
   }
 
   return (

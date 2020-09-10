@@ -9,10 +9,11 @@ import { lightBlue, blueGrey, red } from '@material-ui/core/colors'
 import {
   unstable_createMuiStrictModeTheme as createMuiTheme,
   ThemeProvider as MuiThemeProvider,
+  ThemeOptions,
 } from '@material-ui/core/styles'
 
 // A custom theme for this app
-const lightTheme = {
+const lightTheme: ThemeOptions = {
   palette: {
     primary: {
       main: '#ef6c00',
@@ -27,7 +28,7 @@ const lightTheme = {
   },
 }
 
-const darkTheme = {
+const darkTheme: ThemeOptions = {
   palette: {
     primary: {
       main: '#ef6c00',
@@ -45,19 +46,30 @@ const darkTheme = {
 const browserIsDarkMode = () =>
   window.matchMedia('(prefers-color-scheme: dark)').matches
 
-export const ThemeContext = createContext({})
+export type ThemeContextType = {
+  isDarkMode: boolean
+  toggleTheme: () => void
+}
+
+export const ThemeContext = createContext<ThemeContextType | undefined>(
+  undefined
+)
+
+interface ThemeProviderProps {
+  children: React.ReactNode
+}
 
 // Responsible for watching the dark mode toggle of the browser / os
 // and setting up the corresponding theme
-export const ThemeProvider = ({ children }) => {
-  const [dark, setDark] = useState(browserIsDarkMode)
+export const ThemeProvider = ({ children }: ThemeProviderProps) => {
+  const [dark, setDark] = useState<boolean>(browserIsDarkMode)
 
   const toggleTheme = useCallback(() => {
     setDark((prevDark) => !prevDark)
   }, [])
 
   useLayoutEffect(() => {
-    const handleEvent = (e) => setDark(e.matches)
+    const handleEvent = (e: MediaQueryListEvent) => setDark(e.matches)
     const mql = window.matchMedia('(prefers-color-scheme: dark)')
     mql.addEventListener('change', handleEvent)
 
@@ -70,7 +82,7 @@ export const ThemeProvider = ({ children }) => {
   ])
 
   // Not sure about this memo but we don't want to force rendering
-  const providerValue = useMemo(
+  const providerValue = useMemo<ThemeContextType>(
     () => ({
       isDarkMode: dark,
       toggleTheme: toggleTheme,

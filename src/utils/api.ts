@@ -2,30 +2,40 @@ import axios from 'axios'
 import * as firebase from 'firebase/app'
 import 'firebase/database'
 
+import { User, Item, UserAndPosts } from '../types/api'
+
 const client = axios.create({
   baseURL: 'https://hacker-news.firebaseio.com/v0/',
   timeout: 2000,
 })
 
-const filterDead = (posts) =>
+interface ServerResponse<T> {
+  data: T
+}
+
+const filterDead = (posts: Array<Item>): Array<Item> =>
   posts.filter(Boolean).filter(({ dead }) => dead !== true)
 
-const filterDeleted = (posts) =>
+const filterDeleted = (posts: Array<Item>): Array<Item> =>
   posts.filter(Boolean).filter(({ deleted }) => deleted !== true)
 
-const onlyPosts = (posts) =>
+const onlyPosts = (posts: Array<Item>): Array<Item> =>
   posts.filter(Boolean).filter(({ type }) => type === 'story')
 
-export const fetchItem = async (id) => {
-  const { data } = await client.get(`/item/${id}.json`)
+export const fetchItem = async (id: number): Promise<Item> => {
+  const { data } = await client.get<string, ServerResponse<Item>>(
+    `/item/${id}.json`
+  )
   return data
 }
 
-export const fetchUser = async (userName) => {
+export const fetchUser = async (userName: string): Promise<UserAndPosts> => {
   try {
-    const { data } = await client.get(`/user/${userName}.json`)
+    const { data } = await client.get<string, ServerResponse<User>>(
+      `/user/${userName}.json`
+    )
     const postIds = data.submitted.slice(0, 30)
-    const posts = await Promise.all(postIds.map(fetchItem))
+    const posts = await Promise.all<Item>(postIds.map(fetchItem))
     const filteredPosts = filterDeleted(filterDead(onlyPosts(posts)))
     return { ...data, posts: filteredPosts }
   } catch (error) {

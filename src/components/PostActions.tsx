@@ -19,13 +19,15 @@ import { Link as RouterLink, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import extractDomain from '../utils/extractDomain'
 
+import { Item } from '../types/api'
+
 const useStyles = makeStyles(() => ({
   right: {
     textAlign: 'right',
   },
 }))
 
-const PostActions = ({ id, url, score, descendants, by, time }) => {
+const PostActions = ({ id, url, score, descendants, by, time }: Item) => {
   const history = useHistory()
   const classes = useStyles()
   const handleClick = () => history.push(`/users/${by}`)

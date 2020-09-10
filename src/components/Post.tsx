@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardActionArea,
   Link,
+  LinkProps,
   Box,
   CardActions,
 } from '@material-ui/core'
@@ -15,6 +16,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Skeleton } from '@material-ui/lab'
 import { Link as RouterLink } from 'react-router-dom'
 import PostActions from './PostActions'
+import { Item } from '../types/api'
 
 const useStyles = makeStyles((_theme) => ({
   content: {
@@ -28,25 +30,39 @@ const useStyles = makeStyles((_theme) => ({
   },
 }))
 
-const PostLink = ({ id, url, children }) => {
-  const defaultProps = { color: 'inherit', style: { textDecoration: 'none' } }
+interface IPostLink {
+  id?: number
+  url?: string
+  children: React.ReactChild
+}
+
+const PostLink = ({ id, url, children }: IPostLink) => {
+  const defaultProps = { style: { textDecoration: 'none' } }
   const props = url
     ? {
         ...defaultProps,
+        color: 'inherit',
         href: url,
         rel: 'noopener noreferrer',
         target: '_blank',
       }
     : {
         ...defaultProps,
+        color: 'inherit',
         component: RouterLink,
         to: `/items/${id}`,
       }
 
-  return <Link {...props}>{children}</Link>
+  return <Link {...(props as LinkProps)}>{children}</Link>
 }
 
-const Post = ({ rank, post, expanded }) => {
+interface IPost {
+  post: Item | null
+  rank?: number
+  expanded?: boolean
+}
+
+const Post = ({ rank, post, expanded = false }: IPost) => {
   const classes = useStyles()
 
   // Don't attempt to render non stories they need different UI
@@ -72,12 +88,12 @@ const Post = ({ rank, post, expanded }) => {
         </CardActionArea>
 
         <CardContent className={classes.content}>
-          {expanded && (
+          {post && expanded && (
             <Typography
               variant="body1"
               color="textSecondary"
               component="p"
-              dangerouslySetInnerHTML={{ __html: post?.text }}
+              dangerouslySetInnerHTML={{ __html: post.text }}
             ></Typography>
           )}
 

@@ -14,7 +14,11 @@ import { Skeleton } from '@material-ui/lab'
 import { Schedule as ScheduleIcon } from '@material-ui/icons'
 import { Link as RouterLink } from 'react-router-dom'
 
-const Comment = ({ id }) => {
+interface IComment {
+  id: number
+}
+
+const Comment = ({ id }: IComment) => {
   const comment = useFireItem(id)
 
   // Don't render deleted comments
