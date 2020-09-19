@@ -3,7 +3,7 @@ import React, {
   useState,
   useMemo,
   useCallback,
-  useLayoutEffect,
+  useEffect,
 } from 'react'
 import { lightBlue, blueGrey, red } from '@material-ui/core/colors'
 import {
@@ -11,6 +11,7 @@ import {
   ThemeProvider as MuiThemeProvider,
   ThemeOptions,
 } from '@material-ui/core/styles'
+import { useMedia } from 'the-platform'
 
 // A custom theme for this app
 const lightTheme: ThemeOptions = {
@@ -64,17 +65,14 @@ interface IThemeProvider {
 export const ThemeProvider = ({ children }: IThemeProvider) => {
   const [dark, setDark] = useState<boolean>(browserIsDarkMode)
 
-  const toggleTheme = useCallback(() => {
-    setDark((prevDark) => !prevDark)
-  }, [])
+  const prefersDarkMode = useMedia(
+    '(prefers-color-scheme: dark)',
+    browserIsDarkMode()
+  )
 
-  useLayoutEffect(() => {
-    const handleEvent = (e: MediaQueryListEvent) => setDark(e.matches)
-    const mql = window.matchMedia('(prefers-color-scheme: dark)')
-    mql.addEventListener('change', handleEvent)
+  const toggleTheme = useCallback(() => setDark((prevDark) => !prevDark), [])
 
-    return () => mql.removeListener(handleEvent)
-  }, [])
+  useEffect(() => setDark(prefersDarkMode), [prefersDarkMode])
 
   // We only want to create the theme as little as possible so memoize the result of createMuiTheme
   const theme = useMemo(() => createMuiTheme(dark ? darkTheme : lightTheme), [
